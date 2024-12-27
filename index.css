@@ -1,0 +1,168 @@
+/* General Styles */
+body {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+  color: #333;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+/* Textareas for JSON Input */
+textarea {
+  width: 400px;
+  height: 150px;
+  margin: 10px;
+  padding: 10px;
+  font-size: 14px;
+  font-family: "Courier New", monospace;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+/* Compare Button */
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+/* Chart Area */
+#chart {
+  width: 100%;
+  max-width: 800px;
+  height: 600px;
+  margin: 20px auto;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+/* D3 Visualization Styling */
+.node circle {
+  fill: lightgray;
+  stroke: black;
+  stroke-width: 1.5px;
+  transition: fill 0.2s ease;
+}
+
+.node circle:hover {
+  fill: #007bff;
+}
+
+.node text {
+  font-size: 14px;
+  font-family: sans-serif;
+  fill: #333;
+}
+
+.link {
+  fill: none;
+  stroke: #aaa;
+  stroke-width: 1.5px;
+}
+
+/* Styles for visualization and display */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f4f4f9;
+}
+
+h1 {
+  text-align: center;
+  color: #555;
+}
+
+textarea {
+  width: 400px;
+  height: 150px;
+  margin: 10px;
+  padding: 10px;
+  font-family: "Courier New", monospace;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+#chart {
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 800px;
+  height: 600px;
+}
+
+.node circle {
+  fill: lightgray;
+  stroke: black;
+  stroke-width: 1.5px;
+  cursor: pointer;
+}
+
+.node text {
+  font-size: 12px;
+}
+
+.link {
+  fill: none;
+  stroke: #aaa;
+  stroke-width: 1.5px;
+}
+
+#nodeDetails {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
