@@ -24,40 +24,55 @@ require(["vs/editor/editor.main"], function () {
     try {
       const json1 = JSON.parse(editor1.getValue());
       const json2 = JSON.parse(editor2.getValue());
-
+  
       const root = {
         name: "Root",
         children: [
-          { name: "JSON 1", children: createTree(json1) },
-          { name: "JSON 2", children: createTree(json2) },
+          { name: "JSON 1", children: createTree(json1, "json1") },
+          { name: "JSON 2", children: createTree(json2, "json2", json1) },
         ],
       };
-
-      renderTree(root);
+  
+      // Render JSON 1 tree in the first container
+      renderTree(root.children[0], "#treeContainer1");
+  
+      // Render JSON 2 tree in the second container
+      renderTree(root.children[1], "#treeContainer2");
+  
     } catch (error) {
       alert("Invalid JSON format. Please correct and try again.");
     }
   });
 
-  function createTree(data) {
+  function createTree(data, source, compareData = null) {
     if (typeof data !== "object" || data === null) {
       return [];
     }
 
-    return Object.keys(data).map((key) => ({
-      name: key,
-      children: createTree(data[key]),
-      value: data[key],
-      _collapsed: true, // Default state: collapsed
-    }));
+    return Object.keys(data).map((key) => {
+      const node = {
+        name: key,
+        children: createTree(data[key], source, compareData ? compareData[key] : null),
+        value: data[key],
+        source: source, // Mark whether it belongs to JSON 1 or JSON 2
+        _collapsed: true, // Default state: collapsed
+      };
+
+      // If the node exists in JSON 2 but not in JSON 1, mark it as a new node
+      if (compareData && !(key in compareData)) {
+        node.isNewInJson2 = true; // Mark as a new node in JSON 2
+      }
+
+      return node;
+    });
   }
 
-  function renderTree(data) {
-    const width = window.innerWidth; // Adjust width based on the window size
+  function renderTree(data, containerId) {
+    const width = window.innerWidth / 2; // Adjust width based on the window size (half the window width)
     const height = window.innerHeight; // Adjust height based on the window size
   
     const svg = d3
-      .select("#chart")
+      .select(containerId)
       .html("") // Clear the previous chart
       .append("svg")
       .attr("width", width)
@@ -100,9 +115,10 @@ require(["vs/editor/editor.main"], function () {
     nodes
       .append("circle")
       .attr("r", 5)
+      .attr("fill", (d) => (d.data.isNewInJson2 ? "red" : "steelblue")) // Highlight new nodes in JSON 2
       .on("click", function (event, d) {
         toggleNode(d);
-        renderTree(data); // Re-render the tree to update the collapse state
+        renderTree(data, containerId); // Re-render the tree to update the collapse state
       });
   
     nodes
