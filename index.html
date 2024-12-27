@@ -5,19 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JSON Structure Comparer</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.39.0/min/vs/loader.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/editor.css" />
   </head>
   <body>
     <h1>JSON Structure Comparer</h1>
-    <div>
-      <textarea id="json1" placeholder="Paste JSON 1 here"></textarea>
-      <textarea id="json2" placeholder="Paste JSON 2 here"></textarea>
+    <div id="editorContainer">
+      <div id="editor1" class="editor"></div>
+      <div id="editor2" class="editor"></div>
     </div>
     <button id="compareButton">Compare JSONs</button>
     <div id="chart"></div>
     <div id="nodeDetails">
       <strong>Node Details:</strong> <span id="details"></span>
-    </div>
+    </div>    
+    <script src="js/utils.js"></script>
     <script src="js/index.js"></script>
   </body>
 </html>

@@ -1,0 +1,31 @@
+#editorContainer {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.editor {
+  width: 400px;
+  height: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+#chart {
+  margin: 20px auto;
+  border-radius: 10px;
+  width: 800px;
+  height: 600px;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #ffffff, #d3d3d3);
+}
+
+#nodeDetails {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
