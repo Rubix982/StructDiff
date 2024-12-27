@@ -25,5 +25,44 @@
     </div>    
     <script src="js/utils.js"></script>
     <script src="js/index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/qunit/qunit-2.16.0.js"></script>
+    
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    
+    <script>
+      QUnit.test("JSON Parsing", function(assert) {
+        const json1 = '{"name": "test"}';
+        const json2 = '{"age": 25}';
+    
+        let parsed1, parsed2;
+        try {
+          parsed1 = JSON.parse(json1);
+          parsed2 = JSON.parse(json2);
+        } catch (error) {
+          assert.ok(false, "JSON parsing failed");
+        }
+        assert.deepEqual(parsed1, { name: "test" }, "Parsed JSON1 correctly");
+        assert.deepEqual(parsed2, { age: 25 }, "Parsed JSON2 correctly");
+      });
+    
+      QUnit.test("Tree Creation", function(assert) {
+        const data = { a: 1, b: { c: 2 } };
+        const expected = [
+          { name: "a", value: 1, children: [], source: "json1", _collapsed: true },
+          {
+            name: "b",
+            value: { c: 2 },
+            children: [{ name: "c", value: 2, children: [], source: "json1", _collapsed: true }],
+            source: "json1",
+            _collapsed: true,
+          },
+        ];
+    
+        const result = createTree(data, "json1");
+        assert.deepEqual(result, expected, "Tree structure created correctly");
+      });
+    </script>    
   </body>
 </html>
