@@ -53,21 +53,32 @@ require(["vs/editor/editor.main"], function () {
   }
 
   function renderTree(data) {
-    const width = 800;
-    const height = 600;
+    const width = window.innerWidth; // Adjust width based on the window size
+    const height = window.innerHeight; // Adjust height based on the window size
+  
     const svg = d3
       .select("#chart")
-      .html("")
+      .html("") // Clear the previous chart
       .append("svg")
       .attr("width", width)
       .attr("height", height);
-
+  
+    // Zoom behavior for panning and zooming
+    const zoom = d3.zoom().on("zoom", (event) => {
+      g.attr("transform", event.transform);
+    });
+  
+    svg.call(zoom); // Apply zoom behavior to the SVG
+  
+    // Set all nodes to expanded by default (collapsed = false)
+    setCollapseState(data, false); // Ensure the tree is fully expanded by default
+  
     const root = d3.hierarchy(data, (d) => (d._collapsed ? null : d.children)); // Check for collapse state
     const treeLayout = d3.tree().size([height - 50, width - 50]);
     treeLayout(root);
-
+  
     const g = svg.append("g").attr("transform", "translate(25,25)");
-
+  
     // Draw links
     g.selectAll(".link")
       .data(root.links())
@@ -77,7 +88,7 @@ require(["vs/editor/editor.main"], function () {
       .attr("y1", (d) => d.source.x)
       .attr("x2", (d) => d.target.y)
       .attr("y2", (d) => d.target.x);
-
+  
     // Draw nodes
     const nodes = g
       .selectAll(".node")
@@ -85,25 +96,33 @@ require(["vs/editor/editor.main"], function () {
       .join("g")
       .classed("node", true)
       .attr("transform", (d) => `translate(${d.y},${d.x})`);
-
+  
     nodes
       .append("circle")
       .attr("r", 5)
       .on("click", function (event, d) {
         toggleNode(d);
-        renderTree(data); // Re-render the tree
+        renderTree(data); // Re-render the tree to update the collapse state
       });
-
+  
     nodes
       .append("text")
       .attr("dx", 10)
       .attr("dy", 5)
       .text((d) => d.data.name);
-
+  
     function toggleNode(node) {
       if (node.data.children) {
         node.data._collapsed = !node.data._collapsed;
       }
     }
-  }
+  
+    // Helper function to set collapse state for all nodes
+    function setCollapseState(node, collapsed) {
+      node._collapsed = collapsed;
+      if (node.children) {
+        node.children.forEach((child) => setCollapseState(child, collapsed));
+      }
+    }
+  }  
 });
