@@ -1,3 +1,4 @@
+// Configure require.js to load the Monaco Editor from a CDN
 require.config({
   paths: {
     vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.39.0/min/vs",
@@ -22,8 +23,8 @@ require(["vs/editor/editor.main"], function () {
 
   document.getElementById("compareButton").addEventListener("click", () => {
     try {
-      const json1 = JSON.parse(editor1.getValue());
-      const json2 = JSON.parse(editor2.getValue());
+      const json1 = JSON.parse(editor1.getValue(0));
+      const json2 = JSON.parse(editor2.getValue(0));
 
       const root = {
         name: "Root",
@@ -88,7 +89,7 @@ require(["vs/editor/editor.main"], function () {
   
       svg.call(zoom); // Apply zoom behavior to the SVG
   
-      // Set all nodes to expanded by default (collapsed = false)
+      // Set all nodes to expand by default (collapsed = false)
       setCollapseState(data, false); // Ensure the tree is fully expanded by default
   
       const root = d3.hierarchy(data, (d) => (d._collapsed ? null : d.children)); // Check for collapse state
@@ -98,13 +99,13 @@ require(["vs/editor/editor.main"], function () {
       const g = svg.append("g").attr("transform", "translate(25,25)");
   
       // Apply force simulation to prevent label overlap
-      const simulation = d3
+      d3
         .forceSimulation(root.descendants())
         .force("charge", d3.forceManyBody().strength(-100))
         .force("center", d3.forceCenter(width / 2, height / 2))
         .force(
           "collision",
-          d3.forceCollide().radius((d) => 10) // Adjust the radius as needed
+          d3.forceCollide().radius(() => 10) // Adjust the radius as needed
         )
         .on("tick", ticked);
   
@@ -117,7 +118,7 @@ require(["vs/editor/editor.main"], function () {
         .attr("y1", (d) => d.source.x)
         .attr("x2", (d) => d.target.y)
         .attr("y2", (d) => d.target.x);
-  
+
       // Draw nodes
       const nodes = g
         .selectAll(".node")
