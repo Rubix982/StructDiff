@@ -1,0 +1,7 @@
+{
+  "name": "struct-diff",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "lite-server"
+  }
+}
